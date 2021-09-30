@@ -26,6 +26,7 @@ import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
+import com.vijay.jsonwizard.textwatchers.EmailTextWatcher;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
 import com.vijay.jsonwizard.validators.edittext.MaxLengthValidator;
@@ -137,30 +138,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 if (required) {
                    // editText.addValidator(new RequiredValidator(bundle.resolveKey(requiredObject.getString("err"))));
 
-                    editText.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-
-                            String inputText = editText.getText().toString().trim();
-                            String  emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                            if(!(inputText.matches(emailPattern)) && (inputText.length() > 0)){
-                                textInputLayout.setErrorEnabled(true);
-                                textInputLayout.setError("Is not a valid email");
-                            }else{
-                                textInputLayout.setErrorEnabled(false);
-                            }
-                        }
-                    });
+                    editText.addTextChangedListener(new EmailTextWatcher(context, textInputLayout));
 
                 }
             }
@@ -198,7 +176,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             }
         }
 
-        JSONObject maxLengthObject = jsonObject.optJSONObject("v_min_length");
+        JSONObject maxLengthObject = jsonObject.optJSONObject("v_max_length");
         if (maxLengthObject != null) {
             String maxLengthValue = maxLengthObject.optString("value");
             if (!TextUtils.isEmpty(maxLengthValue)) {
@@ -240,7 +218,9 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                     required = Boolean.TRUE.toString().equalsIgnoreCase(requiredValue);
                 }
 
-                if (required) { editText.addTextChangedListener(new TextWatcher() {
+                if (required) {
+
+                    editText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -264,6 +244,8 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 }
             }
         }
+
+
 
 
 
