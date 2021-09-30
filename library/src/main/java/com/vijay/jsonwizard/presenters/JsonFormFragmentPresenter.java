@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
@@ -67,6 +69,7 @@ import com.vijay.jsonwizard.widgets.DatePickerFactory;
 import com.vijay.jsonwizard.widgets.EditTextFactory;
 import com.vijay.jsonwizard.widgets.ImagePickerFactory;
 import com.vijay.jsonwizard.widgets.LocationPickerFactory;
+import com.vijay.jsonwizard.widgets.MaterialEditTextFactory;
 import com.vijay.jsonwizard.widgets.SpinnerFactory;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
@@ -376,6 +379,12 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                     if (!validationStatus.isValid()) {
                         return validationStatus;
                     }
+                }
+            }else if (childAt instanceof TextInputLayout){
+                TextInputLayout textInputLayout = (TextInputLayout) childAt;
+                ValidationStatus validationStatus = MaterialEditTextFactory.validate(textInputLayout.getEditText());
+                if(!validationStatus.isValid()){
+                    return validationStatus;
                 }
             }
         }
