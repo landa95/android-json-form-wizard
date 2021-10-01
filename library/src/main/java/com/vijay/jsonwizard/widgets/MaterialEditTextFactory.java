@@ -15,23 +15,28 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputEditText;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.jayway.jsonpath.internal.function.numeric.Max;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
 import com.rey.material.util.ViewUtil;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.GenericTextWatcher;
+import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
 import com.vijay.jsonwizard.textwatchers.EmailTextWatcher;
+import com.vijay.jsonwizard.textwatchers.MaxLengthTextWatcher;
+import com.vijay.jsonwizard.textwatchers.MinLengthTextWatcher;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
 import com.vijay.jsonwizard.validators.edittext.MaxLengthValidator;
 import com.vijay.jsonwizard.validators.edittext.MinLengthValidator;
 import com.vijay.jsonwizard.validators.edittext.RequiredValidator;
+import com.vijay.jsonwizard.validators.textinputlayout.EmailValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,11 +46,10 @@ import java.util.List;
 
 public class MaterialEditTextFactory implements FormWidgetFactory {
 
-     public static ValidationStatus validate(EditText editText) {
-       //  boolean validate = editText.validate();
-         boolean validate = true;
+     public static ValidationStatus validate(MaterialTextInputLayout materialTextInputLayout) {
+         boolean validate = materialTextInputLayout.validate();
          if(!validate) {
-             return new ValidationStatus(false, editText.getError().toString());
+             return new ValidationStatus(false, materialTextInputLayout.getError().toString());
          }
          return new ValidationStatus(true, null);
      }
@@ -84,7 +88,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
         final int maxLength;
         List<View> views = new ArrayList<>(1);
 
-        final TextInputLayout textInputLayout = (TextInputLayout) LayoutInflater.from(context).inflate(R.layout.item_material_edit_text,
+        final MaterialTextInputLayout textInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(R.layout.item_material_edit_text,
                 null);
 
         final TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
@@ -136,10 +140,8 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 }
 
                 if (required) {
-                   // editText.addValidator(new RequiredValidator(bundle.resolveKey(requiredObject.getString("err"))));
-
-                    editText.addTextChangedListener(new EmailTextWatcher(context, textInputLayout));
-
+                    textInputLayout.addValidator(new EmailValidator(bundle.resolveKey(emailObject.getString("err"))));
+                    //editText.addTextChangedListener(new EmailTextWatcher(context, textInputLayout));
                 }
             }
         }
@@ -152,27 +154,9 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             if (!TextUtils.isEmpty(minLengthValue)) {
                 minLength = Integer.parseInt(minLengthValue);
                // editText.addValidator(new MinLengthValidator(bundle.resolveKey(minLengthObject.getString("err")),
-                        //Integer.parseInt(minLengthValue)));
+                //Integer.parseInt(minLengthValue)));
                // editText.setMinCharacters(minLength);
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        if (editText.getText().toString().trim().length() < minLength){
-                            textInputLayout.setErrorEnabled(true);
-                            textInputLayout.setError("Enter a minimum value of characters");
-                        }
-                    }
-                });
+                editText.addTextChangedListener(new MinLengthTextWatcher(context.getApplicationContext(), textInputLayout, minLength));
             }
         }
 
@@ -184,25 +168,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 // editText.addValidator(new MinLengthValidator(bundle.resolveKey(minLengthObject.getString("err")),
                 //Integer.parseInt(minLengthValue)));
                 // editText.setMinCharacters(minLength);
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        if (editText.getText().toString().trim().length() > maxLength){
-                            textInputLayout.setErrorEnabled(true);
-                            textInputLayout.setError("Max length value has been surpassed");
-                        }
-                    }
-                });
+                editText.addTextChangedListener(new MaxLengthTextWatcher(context.getApplicationContext(), textInputLayout, maxLength));
             }
         }
 
@@ -245,7 +211,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             }
         }
 
-
+        textInputLayout.initTextWatchers();
 
 
 

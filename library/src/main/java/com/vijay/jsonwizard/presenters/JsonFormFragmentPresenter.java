@@ -43,6 +43,7 @@ import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.barcode.LivePreviewActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.CheckBox;
+import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
 import com.vijay.jsonwizard.customviews.RadioButton;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
@@ -368,6 +369,12 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 if (!validationStatus.isValid()) {
                     return validationStatus;
                 }
+            } else if (childAt instanceof MaterialTextInputLayout){
+                MaterialTextInputLayout textInputLayout = (MaterialTextInputLayout) childAt;
+                ValidationStatus validationStatus = MaterialEditTextFactory.validate(textInputLayout);
+                if(!validationStatus.isValid()){
+                    return validationStatus;
+                }
             } else if (childAt instanceof LinearLayout) {
                 if (JsonFormConstants.LOCATION_PICKER.equals(childAt.getTag(R.id.type))) {
                     ValidationStatus validationStatus = writeValuesAndValidateLocationPicker((LinearLayout) childAt, key);
@@ -379,12 +386,6 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                     if (!validationStatus.isValid()) {
                         return validationStatus;
                     }
-                }
-            }else if (childAt instanceof TextInputLayout){
-                TextInputLayout textInputLayout = (TextInputLayout) childAt;
-                ValidationStatus validationStatus = MaterialEditTextFactory.validate(textInputLayout.getEditText());
-                if(!validationStatus.isValid()){
-                    return validationStatus;
                 }
             }
         }
