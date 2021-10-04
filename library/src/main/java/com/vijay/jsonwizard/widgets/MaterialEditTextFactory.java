@@ -1,11 +1,8 @@
 package com.vijay.jsonwizard.widgets;
 
 import android.content.Context;
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -14,10 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import com.google.android.material.textfield.TextInputLayout;
-import com.jayway.jsonpath.internal.function.numeric.Max;
-import com.rengwuxian.materialedittext.MaterialEditText;
-import com.rengwuxian.materialedittext.validation.RegexpValidator;
+
 import com.rey.material.util.ViewUtil;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -28,15 +22,12 @@ import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
-import com.vijay.jsonwizard.textwatchers.EmailTextWatcher;
-import com.vijay.jsonwizard.textwatchers.MaxLengthTextWatcher;
-import com.vijay.jsonwizard.textwatchers.MinLengthTextWatcher;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
-import com.vijay.jsonwizard.validators.edittext.RequiredValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.EmailValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.MaxLengthValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.MinLengthValidator;
+import com.vijay.jsonwizard.validators.textinputlayout.RequiredValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -176,32 +167,11 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 }
 
                 if (required) {
-
-                    editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        String inputText = editText.getText().toString().trim();
-                        if((inputText.isEmpty())){
-                            textInputLayout.setErrorEnabled(true);
-                            textInputLayout.setError("Cannot be empty");
-                        }
-                    }
-                });
-                   //editText.addValidator(new RequiredValidator(bundle.resolveKey(requiredObject.getString("err"))));
+                   textInputLayout.addValidator(new RequiredValidator(bundle.resolveKey(requiredObject.getString("err"))));
                 }
             }
         }
-
+        
         textInputLayout.initTextWatchers();
 
 
