@@ -3,6 +3,7 @@ package com.vijay.jsonwizard.widgets;
 import android.content.Context;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -24,11 +25,10 @@ import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
-import com.vijay.jsonwizard.validators.textinputlayout.EmailValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.MaxLengthValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.MinLengthValidator;
+import com.vijay.jsonwizard.validators.textinputlayout.RegexpValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.RequiredValidator;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -114,28 +114,6 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             editText.setLines(jsonObject.optInt("lines"));
         }
 
-        //NEW VALIDATORS
-        JSONObject emailObject = jsonObject.optJSONObject("v_email");
-        if (emailObject != null) {
-            String emailValue = emailObject.getString("value");
-            if (!TextUtils.isEmpty(emailValue)) {
-                boolean required = false;
-                if (resolver.isValidExpression(emailValue)) {
-                    JSONObject currentValues = ExpressionResolverContextUtils.getCurrentValues(context, stepName);
-                    required = resolver.existsExpression(emailValue, currentValues);
-                } else {
-                    required = Boolean.TRUE.toString().equalsIgnoreCase(emailValue);
-                }
-
-                if (required) {
-                    textInputLayout.addValidator(new EmailValidator(bundle.resolveKey(emailObject.getString("err"))));
-                    //editText.addTextChangedListener(new EmailTextWatcher(context, textInputLayout));
-                }
-            }
-        }
-
-
-
         JSONObject minLengthObject = jsonObject.optJSONObject("v_min_length");
         if (minLengthObject != null) {
             String minLengthValue = minLengthObject.optString("value");
@@ -171,58 +149,15 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 }
             }
         }
-        
+
         textInputLayout.initTextWatchers();
 
-
-
-        //add validators
-        /*JSONObject requiredObject = jsonObject.optJSONObject("v_required");
-        if (requiredObject != null) {
-            String requiredValue = requiredObject.getString("value");
-            if (!TextUtils.isEmpty(requiredValue)) {
-                boolean required = false;
-                if (resolver.isValidExpression(requiredValue)) {
-                    JSONObject currentValues = ExpressionResolverContextUtils.getCurrentValues(context, stepName);
-                    required = resolver.existsExpression(requiredValue, currentValues);
-                } else {
-                    required = Boolean.TRUE.toString().equalsIgnoreCase(requiredValue);
-                }
-
-                if (required) {
-                    editText.addValidator(new RequiredValidator(bundle.resolveKey(requiredObject.getString("err"))));
-                }
-            }
-        }
-
-       /* JSONObject minLengthObject = jsonObject.optJSONObject("v_min_length");
-        if (minLengthObject != null) {
-            String minLengthValue = minLengthObject.optString("value");
-            if (!TextUtils.isEmpty(minLengthValue)) {
-                minLength = Integer.parseInt(minLengthValue);
-                editText.addValidator(new MinLengthValidator(bundle.resolveKey(minLengthObject.getString("err")),
-                        Integer.parseInt(minLengthValue)));
-                editText.setMinCharacters(minLength);
-            }
-        }
-
-        JSONObject maxLengthObject = jsonObject.optJSONObject("v_max_length");
-        if (maxLengthObject != null) {
-            String maxLengthValue = maxLengthObject.optString("value");
-            if (!TextUtils.isEmpty(maxLengthValue)) {
-                maxLength = Integer.parseInt(maxLengthValue);
-                editText.add
-                editText.addValidator(new MaxLengthValidator(bundle.resolveKey(maxLengthObject.getString("err")),
-                        Integer.parseInt(maxLengthValue);
-                editText.setMaxCharacters(maxLength);
-            }
-        }
 
         JSONObject regexObject = jsonObject.optJSONObject("v_regex");
         if (regexObject != null) {
             String regexValue = regexObject.optString("value");
             if (!TextUtils.isEmpty(regexValue)) {
-                editText.addValidator(new RegexpValidator(bundle.resolveKey(regexObject.getString("err")), regexValue));
+                textInputLayout.addValidator(new RegexpValidator(bundle.resolveKey(regexObject.getString("err")), regexValue));
             }
         }
 
@@ -231,7 +166,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             String emailValue = emailObject.optString("value");
             if (!TextUtils.isEmpty(emailValue)) {
                 if (Boolean.TRUE.toString().equalsIgnoreCase(emailValue)) {
-                    editText.addValidator(new RegexpValidator(bundle.resolveKey(emailObject.getString("err")),
+                    textInputLayout.addValidator(new RegexpValidator(bundle.resolveKey(emailObject.getString("err")),
                             android.util.Patterns.EMAIL_ADDRESS.toString()));
                 }
             }
@@ -242,7 +177,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             String urlValue = urlObject.optString("value");
             if (!TextUtils.isEmpty(urlValue)) {
                 if (Boolean.TRUE.toString().equalsIgnoreCase(urlValue)) {
-                    editText.addValidator(new RegexpValidator(bundle.resolveKey(urlObject.getString("err")),
+                    textInputLayout.addValidator(new RegexpValidator(bundle.resolveKey(urlObject.getString("err")),
                             Patterns.WEB_URL.toString()));
                 }
             }
@@ -253,11 +188,11 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             String numericValue = numericObject.optString("value");
             if (!TextUtils.isEmpty(numericValue)) {
                 if (Boolean.TRUE.toString().equalsIgnoreCase(numericValue)) {
-                    editText.addValidator(
+                    textInputLayout.addValidator(
                             new RegexpValidator(bundle.resolveKey(numericObject.getString("err")), "[0-9]+"));
                 }
             }
-        }*/
+        }
 
         // edit type check
         String editType = jsonObject.optString("edit_type");

@@ -8,9 +8,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.vijay.jsonwizard.validators.edittext.Validator;
 import com.vijay.jsonwizard.validators.textinputlayout.TILValidator;
 
 import java.util.ArrayList;
