@@ -3,9 +3,9 @@ package com.vijay.jsonwizard.validators.textinputlayout;
 import androidx.annotation.NonNull;
 
     /**
-     * Created by landa95 23/09/2021
+     * Created by landa95 30/09/2021
      * Copyright 2014 rengwuxian
-     * com.rengwuxian.materialedittext.validation.METValidator
+     * com.rengwuxian.materialedittext.validation..edittext.METValidator
      */
 public abstract class TILValidator {
 

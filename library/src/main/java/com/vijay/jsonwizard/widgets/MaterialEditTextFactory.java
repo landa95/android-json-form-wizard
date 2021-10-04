@@ -33,10 +33,10 @@ import com.vijay.jsonwizard.textwatchers.MaxLengthTextWatcher;
 import com.vijay.jsonwizard.textwatchers.MinLengthTextWatcher;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
-import com.vijay.jsonwizard.validators.edittext.MaxLengthValidator;
-import com.vijay.jsonwizard.validators.edittext.MinLengthValidator;
 import com.vijay.jsonwizard.validators.edittext.RequiredValidator;
 import com.vijay.jsonwizard.validators.textinputlayout.EmailValidator;
+import com.vijay.jsonwizard.validators.textinputlayout.MaxLengthValidator;
+import com.vijay.jsonwizard.validators.textinputlayout.MinLengthValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,9 +92,6 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
                 null);
 
         final TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
-
-      //  EditText editText = (EditText) LayoutInflater.from(context).inflate(R.layout.item_material_edit_text,
-        //        null);
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         textInputLayout.setHint(hint);
         textInputLayout.setErrorEnabled(true);
@@ -153,10 +150,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             String minLengthValue = minLengthObject.optString("value");
             if (!TextUtils.isEmpty(minLengthValue)) {
                 minLength = Integer.parseInt(minLengthValue);
-               // editText.addValidator(new MinLengthValidator(bundle.resolveKey(minLengthObject.getString("err")),
-                //Integer.parseInt(minLengthValue)));
-               // editText.setMinCharacters(minLength);
-                editText.addTextChangedListener(new MinLengthTextWatcher(context.getApplicationContext(), textInputLayout, minLength));
+                textInputLayout.addValidator(new MinLengthValidator(minLengthObject.getString("err"), minLength));
             }
         }
 
@@ -165,10 +159,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             String maxLengthValue = maxLengthObject.optString("value");
             if (!TextUtils.isEmpty(maxLengthValue)) {
                 maxLength = Integer.parseInt(maxLengthValue);
-                // editText.addValidator(new MinLengthValidator(bundle.resolveKey(minLengthObject.getString("err")),
-                //Integer.parseInt(minLengthValue)));
-                // editText.setMinCharacters(minLength);
-                editText.addTextChangedListener(new MaxLengthTextWatcher(context.getApplicationContext(), textInputLayout, maxLength));
+                textInputLayout.addValidator(new MaxLengthValidator(maxLengthObject.getString("err"), maxLength));
             }
         }
 
