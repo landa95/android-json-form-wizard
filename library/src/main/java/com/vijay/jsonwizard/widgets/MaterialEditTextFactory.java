@@ -210,8 +210,9 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
     private List<View> getReadOnlyViewsFromJson(String stepName, Context context, JSONObject jsonObject, JsonFormBundle bundle, JsonExpressionResolver resolver)
             throws JSONException {
         List<View> views = new ArrayList<>(1);
-        EditText editText = (EditText) LayoutInflater.from(context).inflate(R.layout.item_material_edit_text,
+        MaterialTextInputLayout materialTextInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(R.layout.item_material_edit_text,
                 null);
+        EditText editText = materialTextInputLayout.getEditText();
         editText.setId(ViewUtil.generateViewId());
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         editText.setHint(hint);
@@ -237,7 +238,7 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
             editText.setLines(jsonObject.optInt("lines"));
         }
         editText.setEnabled(false);
-        views.add(editText);
+        views.add(materialTextInputLayout);
         return views;
     }
 
