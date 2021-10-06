@@ -1,11 +1,6 @@
 package com.vijay.jsonwizard.validators.textinputlayout;
 
 
-/**
- * Created by landa95 04/10/2021
- * Copyright 2014 rengwuxian
- * com.rengwuxian.materialedittext.validation.edittext.LengthValidator
- */
 
 public class LengthValidator extends TILValidator {
 

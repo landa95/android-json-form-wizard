@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Created by landa95 04/10/2021
+ */
+
 public class MaterialTextInputLayout extends TextInputLayout  {
 
     private List<TILValidator> validators;
