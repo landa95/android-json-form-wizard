@@ -1,8 +1,8 @@
-package com.vijay.jsonwizard.validators.textinputlayout;
-
 /**
  * Created by landa95
  */
+
+package com.vijay.jsonwizard.validators.textinputlayout;
 
 public class RequiredValidator extends TILValidator{
 

@@ -1,9 +1,3 @@
-package com.vijay.jsonwizard.validators.textinputlayout;
-
-import androidx.annotation.NonNull;
-
-import java.util.regex.Pattern;
-
 /**
  * Created by landa95 30/09/2021
  *
@@ -25,6 +19,12 @@ import java.util.regex.Pattern;
  * Extracted from:
  * com.rengwuxian.materialedittext.validation.RegexpValidator
  */
+
+package com.vijay.jsonwizard.validators.textinputlayout;
+
+import androidx.annotation.NonNull;
+
+import java.util.regex.Pattern;
 
 public class RegexpValidator extends TILValidator{
 

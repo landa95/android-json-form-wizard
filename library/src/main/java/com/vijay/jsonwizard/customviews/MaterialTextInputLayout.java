@@ -1,3 +1,8 @@
+
+/**
+ * Created by landa95 04/10/2021
+ */
+
 package com.vijay.jsonwizard.customviews;
 
 import android.content.Context;
@@ -14,10 +19,6 @@ import com.vijay.jsonwizard.validators.textinputlayout.TILValidator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-/**
- * Created by landa95 04/10/2021
- */
 
 public class MaterialTextInputLayout extends TextInputLayout  {
 

@@ -1,7 +1,5 @@
 package com.vijay.jsonwizard.validators.textinputlayout;
 
-
-
 public class LengthValidator extends TILValidator {
 
     private int minLength = 0;
