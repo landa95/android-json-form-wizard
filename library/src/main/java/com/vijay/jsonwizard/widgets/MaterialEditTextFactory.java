@@ -86,7 +86,6 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         textInputLayout.setHint(hint);
         textInputLayout.setErrorEnabled(true);
-       // editText.setFloatingLabelText(hint);
         editText.setId(View.generateViewId());
         editText.setTag(R.id.key, jsonObject.getString("key"));
         editText.setTag(R.id.type, jsonObject.getString("type"));
@@ -216,7 +215,6 @@ public class MaterialEditTextFactory implements FormWidgetFactory {
         editText.setId(ViewUtil.generateViewId());
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         editText.setHint(hint);
-       // editText.setFloatingLabelText(hint);
         editText.setTag(R.id.key, jsonObject.getString("key"));
         editText.setTag(R.id.type, jsonObject.getString("type"));
         final String value = jsonObject.optString("value");
