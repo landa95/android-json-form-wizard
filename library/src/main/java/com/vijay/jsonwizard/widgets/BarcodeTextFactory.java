@@ -218,7 +218,7 @@ public class BarcodeTextFactory implements FormWidgetFactory {
         List<View> views = new ArrayList<>(1);
         View parentView = LayoutInflater.from(context).inflate(R.layout.item_barcode_edit_text, null);
         final MaterialTextInputLayout textInputLayout = parentView.findViewById(R.id.textField);
-        final EditText editText = textInputLayout.getEditText();
+        final TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
         editText.setId(ViewUtil.generateViewId());
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         textInputLayout.setHint(hint);
@@ -251,7 +251,7 @@ public class BarcodeTextFactory implements FormWidgetFactory {
             editText.setLines(jsonObject.optInt("lines"));
         }
         editText.setEnabled(false);
-
+        textInputLayout.setHintTextColor(textInputLayout.getCounterTextColor());
         textInputLayout.setEndIconVisible(false);
         textInputLayout.setEndIconActivated(false);
 
