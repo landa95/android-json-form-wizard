@@ -91,6 +91,8 @@ public class BarcodeTextFactory implements FormWidgetFactory {
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         textInputLayout.setHint(hint);
 
+        textInputLayout.setTag(R.id.key, jsonObject.getString("key"));
+        textInputLayout.setTag(R.id.type, jsonObject.getString("type"));
         editText.setTag(R.id.key, jsonObject.getString("key"));
         editText.setTag(R.id.type, jsonObject.getString("type"));
 
@@ -221,8 +223,10 @@ public class BarcodeTextFactory implements FormWidgetFactory {
         final TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
         editText.setId(ViewUtil.generateViewId());
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
-        textInputLayout.setHint(hint);
 
+        textInputLayout.setHint(hint);
+        textInputLayout.setTag(R.id.key, jsonObject.getString("key"));
+        textInputLayout.setTag(R.id.type, jsonObject.getString("type"));
         editText.setTag(R.id.key, jsonObject.getString("key"));
         editText.setTag(R.id.type, jsonObject.getString("type"));
 
