@@ -83,7 +83,7 @@ public class LabelFactory implements FormWidgetFactory {
         throws JSONException {
         List<View> views = new ArrayList<>(1);
 
-        EditText editText = (EditText) LayoutInflater.from(context).inflate(R.layout.item_edit_text,
+        EditText editText = (EditText) LayoutInflater.from(context).inflate(R.layout.item_label,
             null);
         editText.setId(View.generateViewId());
         final String hint = bundle.resolveKey(jsonObject.getString(HINT_FIELD));
