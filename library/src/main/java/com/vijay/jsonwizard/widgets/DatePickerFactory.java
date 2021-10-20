@@ -24,7 +24,6 @@ import com.vijay.jsonwizard.utils.ValidationStatus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.ParseException;
