@@ -8,10 +8,7 @@
     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
     app:boxBackgroundColor="@android:color/transparent"
     android:layout_marginBottom="@dimen/activity_vertical_margin">
-    <!--android:textColorHint="@color/accent"
-    app:boxStrokeColor="@color/accent"
-    android:outlineAmbientShadowColor="@color/accent">-->
-
+    
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:id="@+id/spinnerMenuList"
         android:typeface="normal"
