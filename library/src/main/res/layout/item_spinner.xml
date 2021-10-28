@@ -1,4 +1,4 @@
-<com.google.android.material.textfield.TextInputLayout
+<com.vijay.jsonwizard.customviews.MaterialTextInputLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
     app:boxBackgroundColor="@android:color/transparent"
     android:layout_marginBottom="@dimen/activity_vertical_margin">
-    
+
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:id="@+id/spinnerMenuList"
         android:typeface="normal"
@@ -19,4 +19,4 @@
         android:paddingBottom="4dp"
         android:textSize="@dimen/default_text_size"/>
 
-</com.google.android.material.textfield.TextInputLayout>
+</com.vijay.jsonwizard.customviews.MaterialTextInputLayout>
