@@ -77,12 +77,9 @@ public class SpinnerFactory implements FormWidgetFactory {
         MaterialTextInputLayout textInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(R.layout.item_spinner,
                 null);
         MaterialAutoCompleteTextView spinner = (MaterialAutoCompleteTextView) textInputLayout.findViewById(R.id.spinnerMenuList);
-       // TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
-
         final String hint = bundle.resolveKey(jsonObject.optString("hint"));
         if (!TextUtils.isEmpty(hint)) {
             textInputLayout.setHint(hint);
-            //spinner.setFloatingLabelText(hint);
         }
 
         spinner.setId(View.generateViewId());
