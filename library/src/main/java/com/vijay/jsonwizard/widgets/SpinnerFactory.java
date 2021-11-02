@@ -73,7 +73,6 @@ public class SpinnerFactory implements FormWidgetFactory {
     private List<View> getEditableViewsFromJson(String stepName, Context context, JSONObject jsonObject, CommonListener listener,
                                                 JsonFormBundle bundle, JsonExpressionResolver resolver) throws JSONException {
         List<View> views = new ArrayList<>(1);
-        //ERROR
         MaterialTextInputLayout textInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(R.layout.item_spinner,
                 null);
         MaterialAutoCompleteTextView spinner = (MaterialAutoCompleteTextView) textInputLayout.findViewById(R.id.spinnerMenuList);
@@ -127,7 +126,6 @@ public class SpinnerFactory implements FormWidgetFactory {
 
         if (values != null) {
             spinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, values));
-            //spinner.setSelection(0, true);
             spinner.setOnItemSelectedListener(listener);
 
         }
