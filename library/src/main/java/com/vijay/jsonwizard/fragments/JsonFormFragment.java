@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
@@ -277,7 +279,7 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
         MaterialTextInputLayout textInputLayout =  (MaterialTextInputLayout) findMaterialTextInputLayoutByTag(mMainView, currentKey);
 
         if (textInputLayout != null) {
-            EditText editText = textInputLayout.getEditText();
+            TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
             editText.setText(value);
         }
     }
