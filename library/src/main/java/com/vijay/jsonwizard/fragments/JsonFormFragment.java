@@ -246,6 +246,17 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
         // Map will be redrawn by onResume lifecycle method
     }
 
+    @Override
+    public void updateRelevantTextInputLayout(String currentKey, String value) {
+
+        MaterialTextInputLayout textInputLayout =  (MaterialTextInputLayout) findMaterialTextInputLayoutByTag(mMainView, currentKey);
+
+        if (textInputLayout != null) {
+            EditText editText = textInputLayout.getEditText();
+            editText.setText(value);
+        }
+    }
+
     private void redrawMap(String key, String value) {
         View view = getView();
         View inputView = findViewWithTagKeyValue(view, key);
