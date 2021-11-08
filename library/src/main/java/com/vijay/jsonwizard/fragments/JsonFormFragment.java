@@ -32,6 +32,7 @@ import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
 import com.vijay.jsonwizard.customviews.RadioButton;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
@@ -220,6 +221,30 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
         return found;
 
     }
+
+    private MaterialTextInputLayout findMaterialTextInputLayoutByTag(ViewGroup v, String searchKey) {
+
+        MaterialTextInputLayout found = null;
+
+        for (int i = 0; i < v.getChildCount(); i++) {
+            Object child = v.getChildAt(i);
+            if (child instanceof MaterialTextInputLayout) {
+
+                MaterialTextInputLayout materialTextInputLayout = (MaterialTextInputLayout) child;
+                String key = (String) materialTextInputLayout.getTag(R.id.key);
+                if (key.equals(searchKey)) {
+                    return materialTextInputLayout;
+                }
+            } else if (child instanceof ViewGroup) {
+                found = findMaterialTextInputLayoutByTag((ViewGroup) child, searchKey);
+                if (found != null) {
+                    break;
+                }
+            }
+        }
+        return found;
+    }
+
 
     @Override
     public void updateRelevantEditText(String currentKey, String value) {
