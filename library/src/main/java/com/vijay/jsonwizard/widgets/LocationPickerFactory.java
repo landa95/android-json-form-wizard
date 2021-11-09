@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.rengwuxian.materialedittext.MaterialEditText;
-import com.rey.material.util.ViewUtil;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
@@ -130,7 +128,7 @@ public class LocationPickerFactory implements FormWidgetFactory {
         boolean editable = jsonObject.optBoolean("editable");
         MaterialTextInputLayout etLatitude = parentView.findViewById(R.id.location_latitude);
         EditText etLatitudeEditText = etLatitude.getEditText();
-        etLatitude.setId(ViewUtil.generateViewId());
+        etLatitude.setId(View.generateViewId());
         etLatitude.setEnabled(editable);
         etLatitudeEditText.setInputType(INPUT_TYPE_DECIMAL_NUMBER);
         etLatitude.setTag(R.id.key, jsonKey + KEY_SUFFIX_LATITUDE);
@@ -140,7 +138,7 @@ public class LocationPickerFactory implements FormWidgetFactory {
 
         MaterialTextInputLayout etLongitude = parentView.findViewById(R.id.location_longitude);
         EditText etLongitudeEditText = etLongitude.getEditText();
-        etLongitude.setId(ViewUtil.generateViewId());
+        etLongitude.setId(View.generateViewId());
         etLongitude.setEnabled(editable);
         etLongitudeEditText.setInputType(INPUT_TYPE_DECIMAL_NUMBER);
         etLongitude.setTag(R.id.key, jsonKey + KEY_SUFFIX_LONGITUDE);
@@ -150,7 +148,7 @@ public class LocationPickerFactory implements FormWidgetFactory {
 
         MaterialTextInputLayout etAccuracy = parentView.findViewById(R.id.location_accuracy);
         EditText etAccuracyEditText = etAccuracy.getEditText();
-        etAccuracy.setId(ViewUtil.generateViewId());
+        etAccuracy.setId(View.generateViewId());
         etAccuracyEditText.setInputType(INPUT_TYPE_DECIMAL_NUMBER);
         etAccuracy.setTag(R.id.key, jsonKey + KEY_SUFFIX_ACCURACY);
         etAccuracy.setTag(R.id.type, jsonInputType);
@@ -266,9 +264,9 @@ public class LocationPickerFactory implements FormWidgetFactory {
         View parentView = LayoutInflater.from(context).inflate(R.layout.item_location_text, null);
 
         String jsonKey = jsonObject.getString("key");
-        String jsonType = jsonObject.getString("type");
+        String jsonInputType = jsonObject.getString("type");
         parentView.setTag(R.id.key, jsonKey);
-        parentView.setTag(R.id.type, jsonType);
+        parentView.setTag(R.id.type, jsonInputType);
         loadMapConfig(stepName, context, jsonObject, resolver, parentView);
 
         View mapContainer = parentView.findViewById(R.id.map_container);
@@ -279,24 +277,40 @@ public class LocationPickerFactory implements FormWidgetFactory {
         final TextView label = parentView.findViewById(R.id.location_label);
         label.setText(hint);
 
-        final MaterialEditText etLatitude = parentView.findViewById(R.id.location_latitude);
-        etLatitude.setId(ViewUtil.generateViewId());
-        etLatitude.setTag(R.id.key, jsonKey + KEY_SUFFIX_LATITUDE);
-        etLatitude.setTag(R.id.type, jsonType);
-        etLatitude.setEnabled(false);
-        final MaterialEditText etLongitude = parentView.findViewById(R.id.location_longitude);
-        etLongitude.setId(ViewUtil.generateViewId());
-        etLongitude.setTag(R.id.key, jsonKey + KEY_SUFFIX_LONGITUDE);
-        etLongitude.setTag(R.id.type, jsonType);
-        etLongitude.setEnabled(false);
 
-        final MaterialEditText etAccuracy = parentView.findViewById(R.id.location_accuracy);
-        etAccuracy.setId(ViewUtil.generateViewId());
-        etAccuracy.setTag(R.id.key, jsonKey + KEY_SUFFIX_ACCURACY);
-        etAccuracy.setTag(R.id.type, jsonType);
+        MaterialTextInputLayout etLatitude = parentView.findViewById(R.id.location_latitude);
+        EditText etLatitudeEditText = etLatitude.getEditText();
+        etLatitude.setId(View.generateViewId());
+        etLatitude.setEnabled(false);
+        etLatitudeEditText.setInputType(INPUT_TYPE_DECIMAL_NUMBER);
+        etLatitude.setTag(R.id.key, jsonKey + KEY_SUFFIX_LATITUDE);
+        etLatitude.setTag(R.id.type, jsonInputType);
+        etLatitudeEditText.setTag(R.id.key, jsonKey + KEY_SUFFIX_LATITUDE);
+        etLatitudeEditText.setTag(R.id.type, jsonInputType);
+
+        MaterialTextInputLayout etLongitude = parentView.findViewById(R.id.location_longitude);
+        EditText etLongitudeEditText = etLongitude.getEditText();
+        etLongitude.setId(View.generateViewId());
+        etLongitude.setEnabled(false);
+        etLongitudeEditText.setInputType(INPUT_TYPE_DECIMAL_NUMBER);
+        etLongitude.setTag(R.id.key, jsonKey + KEY_SUFFIX_LONGITUDE);
+        etLongitude.setTag(R.id.type, jsonInputType);
+        etLongitudeEditText.setTag(R.id.key, jsonKey + KEY_SUFFIX_LONGITUDE);
+        etLongitudeEditText.setTag(R.id.type, jsonInputType);
+
+        MaterialTextInputLayout etAccuracy = parentView.findViewById(R.id.location_accuracy);
+        EditText etAccuracyEditText = etAccuracy.getEditText();
+        etAccuracy.setId(View.generateViewId());
         etAccuracy.setEnabled(false);
+        etAccuracyEditText.setInputType(INPUT_TYPE_DECIMAL_NUMBER);
+        etAccuracy.setTag(R.id.key, jsonKey + KEY_SUFFIX_ACCURACY);
+        etAccuracy.setTag(R.id.type, jsonInputType);
+        etAccuracyEditText.setTag(R.id.key, jsonKey + KEY_SUFFIX_ACCURACY);
+        etAccuracyEditText.setTag(R.id.type, jsonInputType);
+
         boolean accuracyEnabled = jsonObject.has("accuracy") && jsonObject.getBoolean("accuracy");
         if (accuracyEnabled) {
+
             etAccuracy.setVisibility(View.VISIBLE);
         }
 
@@ -312,7 +326,7 @@ public class LocationPickerFactory implements FormWidgetFactory {
             } else {
                 resolvedValue = value;
             }
-            fillDefaultValue(parentView, etLatitude, etLongitude, etAccuracy, resolvedValue);
+            fillDefaultValue(parentView, etLatitudeEditText, etLongitudeEditText, etAccuracyEditText, resolvedValue);
         } else {
             mapContainer.setVisibility(View.GONE);
             FrameLayout containerParent = (FrameLayout) mapContainer.getParent();
