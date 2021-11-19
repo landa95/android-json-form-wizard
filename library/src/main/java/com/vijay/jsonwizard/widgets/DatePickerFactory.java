@@ -89,7 +89,6 @@ public class DatePickerFactory implements FormWidgetFactory {
         }
 
         //DatepickerListener is attached in JsonFormFragment, check onViewCreated method
-
         views.add(materialTextInputLayout);
         return views;
     }
@@ -98,7 +97,7 @@ public class DatePickerFactory implements FormWidgetFactory {
             throws JSONException {
         List<View> views = new ArrayList<>(1);
         final MaterialTextInputLayout textInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(
-                R.layout.item_material_edit_text, null);
+                R.layout.item_date_picker, null);
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
 
