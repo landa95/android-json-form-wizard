@@ -1,10 +1,9 @@
-package com.vijay.jsonwizard.listener;
+package com.vijay.jsonwizard.listeners;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -13,7 +12,6 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
-import com.vijay.jsonwizard.fragments.JsonFormFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;
