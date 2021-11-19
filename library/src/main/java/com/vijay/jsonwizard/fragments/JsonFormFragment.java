@@ -40,7 +40,7 @@ import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.JsonApi;
-import com.vijay.jsonwizard.listener.DatePickerListener;
+import com.vijay.jsonwizard.listeners.DatePickerListener;
 import com.vijay.jsonwizard.maps.MapsUtils;
 import com.vijay.jsonwizard.mvp.MvpFragment;
 import com.vijay.jsonwizard.presenters.JsonFormFragmentPresenter;
@@ -108,7 +108,7 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
         super.onViewCreated(view, savedInstanceState);
         presenter.addFormElements();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        addDialogPickerListeners(fragmentManager);
+            addDialogPickerListeners(fragmentManager);
 
     }
 
@@ -118,11 +118,15 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
             View v = mMainView.getChildAt(i);
             if(v instanceof MaterialTextInputLayout && v.getTag(R.id.type).equals(JsonFormConstants.DATE_PICKER)){
                 materialTextInputLayout = (MaterialTextInputLayout) v;
-                DatePickerListener datePickerListener = new DatePickerListener(materialTextInputLayout, fragmentManager);
-                materialTextInputLayout.getEditText().setOnClickListener(datePickerListener);
-                materialTextInputLayout.getEditText().setOnFocusChangeListener(datePickerListener);
-            }
+                if(!materialTextInputLayout.getEditText().hasOnClickListeners()){
+                    materialTextInputLayout.hasOnClickListeners();
+                    DatePickerListener datePickerListener = new DatePickerListener(materialTextInputLayout, fragmentManager);
+                    materialTextInputLayout.getEditText().setOnClickListener(datePickerListener);
+                    boolean hasListeners = materialTextInputLayout.getEditText().hasOnClickListeners();
+                    materialTextInputLayout.getEditText().setOnFocusChangeListener(datePickerListener);
 
+                }
+            }
         }
     }
 
