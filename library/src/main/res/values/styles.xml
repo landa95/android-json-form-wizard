@@ -50,9 +50,9 @@
         <item name="materialAlertDialogTitlePanelStyle">@style/MaterialAlertDialog.MaterialComponents.Title.Panel</item>
         <item name="materialAlertDialogTitleIconStyle">@style/MaterialAlertDialog.MaterialComponents.Title.Icon</item>
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.MaterialComponents.Title.Text</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.32</item>
 
         <item name="android:gravity">center</item>
     </style>
-
-
 </resources>
