@@ -41,6 +41,7 @@ import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.JsonApi;
 import com.vijay.jsonwizard.listeners.DatePickerListener;
+import com.vijay.jsonwizard.listeners.TimePickerListener;
 import com.vijay.jsonwizard.maps.MapsUtils;
 import com.vijay.jsonwizard.mvp.MvpFragment;
 import com.vijay.jsonwizard.presenters.JsonFormFragmentPresenter;
@@ -52,6 +53,7 @@ import com.vijay.jsonwizard.viewstates.JsonFormFragmentViewState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 
@@ -122,7 +124,6 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
                     materialTextInputLayout.hasOnClickListeners();
                     DatePickerListener datePickerListener = new DatePickerListener(materialTextInputLayout, fragmentManager);
                     materialTextInputLayout.getEditText().setOnClickListener(datePickerListener);
-                    boolean hasListeners = materialTextInputLayout.getEditText().hasOnClickListeners();
                     materialTextInputLayout.getEditText().setOnFocusChangeListener(datePickerListener);
 
                 }
