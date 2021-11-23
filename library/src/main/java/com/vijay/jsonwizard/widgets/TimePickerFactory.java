@@ -18,6 +18,7 @@ import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
+import com.vijay.jsonwizard.listeners.TimePickerListener;
 import com.vijay.jsonwizard.utils.DateUtils;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
@@ -74,6 +75,7 @@ public class TimePickerFactory implements FormWidgetFactory {
         editText.setId(View.generateViewId());
         materialTextInputLayout.setTag(R.id.key, jsonObject.getString("key"));
         materialTextInputLayout.setTag(R.id.type, jsonObject.getString("type"));
+        materialTextInputLayout.setTag(R.id.v_pattern, bundle.resolveKey(jsonObject.getString("pattern")));
         editText.setTag(R.id.key, jsonObject.getString("key"));
         editText.setTag(R.id.type, jsonObject.getString("type"));
         String widgetPattern = bundle.resolveKey(jsonObject.getString("pattern"));
@@ -110,11 +112,8 @@ public class TimePickerFactory implements FormWidgetFactory {
             }
         }
 
-        TimePickerListener timePickerListener = new TimePickerListener(materialTextInputLayout, widgetPattern);
-        editText.setOnFocusChangeListener(timePickerListener);
-        editText.setOnClickListener(timePickerListener);
         editText.setInputType(InputType.TYPE_NULL);
-
+        //DatepickerListener is attached in JsonFormFragment, check onViewCreated method
         views.add(materialTextInputLayout);
         materialTextInputLayout.initTextWatchers();
         return views;
