@@ -70,7 +70,7 @@ public class TimePickerListener implements View.OnFocusChangeListener, View.OnCl
         }
 
         MaterialTimePicker.Builder builder = new MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).setHour(hour).setMinute(minute);
-        builder.setTheme(R.style.TimePicker);
+        builder.setTheme(R.style.widget_material_timepicker);
         d = builder.build();
 
     /*  d.addOnPositiveButtonClickListener(new View.OnClickListener(){
