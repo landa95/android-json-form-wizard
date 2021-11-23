@@ -73,24 +73,14 @@ public class TimePickerListener implements View.OnFocusChangeListener, View.OnCl
         builder.setTheme(R.style.widget_material_timepicker);
         d = builder.build();
 
-    /*  d.addOnPositiveButtonClickListener(new View.OnClickListener(){
-
-
-          @Override
-          public void onClick(View view) {
-              d.dismiss();
-          }
-      });
-        d = builder.build();
-
-        d.addOnNegativeButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.dismiss();
-            }
-        });*/
-
-        //d.positiveAction("OK").negativeAction("CANCEL");
+        d.addOnPositiveButtonClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               timeText.getEditText().setText(String.format("%02d:%02d", d.getHour(), d.getMinute()));
+               d.dismiss();
+           }
+        });
+        
         d.show(this.fragmentManager, TAG);
     }
 }
