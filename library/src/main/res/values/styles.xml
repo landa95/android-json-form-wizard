@@ -60,7 +60,7 @@
         <item name="colorSurface">@color/white</item>
         <item name="chipStyle">@style/Widget.MaterialComponents.TimePicker.Display</item>
         <item name="materialClockStyle">@style/Widget.MaterialComponents.TimePicker.Clock</item>
-        <item name="imageButtonStyle">@style/Widget.MaterialComponents.TimePicker.ImageButton</item>
+        <item name="imageButtonStyle">@style/Widget.MaterialComponents.TimePicker.ImageButtonBorderless</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.TimePicker.Button</item>
         <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.TimePicker.Title</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
@@ -76,4 +76,11 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.32</item>
     </style>
+
+    <style name ="Widget.MaterialComponents.TimePicker.ImageButtonBorderless" parent="@style/Widget.MaterialComponents.TimePicker.ImageButton">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+
+        <item name="shapeAppearance">@style/Widget.MaterialComponents.TimePicker.ImageButton.ShapeAppearance</item>
+    </style>
+
 </resources>
