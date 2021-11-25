@@ -19,7 +19,6 @@ import android.widget.RadioGroup;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
-import com.rey.material.util.ViewUtil;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
@@ -142,7 +141,7 @@ public class RadioButtonFactory implements FormWidgetFactory {
             null);
         EditText editText = materialTextInputLayout.getEditText();
 
-        editText.setId(ViewUtil.generateViewId());
+        editText.setId(View.generateViewId());
         final String label = bundle.resolveKey(jsonObject.getString("label"));
         materialTextInputLayout.setHint(label);
         materialTextInputLayout.setTag(R.id.key, jsonObject.getString("key"));
