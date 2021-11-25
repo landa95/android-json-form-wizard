@@ -37,14 +37,14 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.barcode.LivePreviewActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.CheckBox;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
-import com.vijay.jsonwizard.customviews.RadioButton;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.fragments.JsonFormFragment;
@@ -291,10 +291,10 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 String childKey = (String) childAt.getTag(R.id.childKey);
                 getView().writeValue(mStepName, parentKey, JsonFormConstants.OPTIONS_FIELD_NAME, childKey,
                         String.valueOf(((CheckBox) childAt).isChecked()));
-            } else if (childAt instanceof RadioButton) {
+            } else if (childAt instanceof MaterialRadioButton) {
                 String parentKey = (String) childAt.getTag(R.id.key);
                 String childKey = (String) childAt.getTag(R.id.childKey);
-                if (((RadioButton) childAt).isChecked()) {
+                if (((MaterialRadioButton) childAt).isChecked()) {
                     getView().writeValue(mStepName, parentKey, childKey);
                 }
             }  else if (childAt instanceof DiscreteScrollView) {
@@ -609,8 +609,8 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
             String parentKey = (String) compoundButton.getTag(R.id.key);
             String childKey = (String) compoundButton.getTag(R.id.childKey);
             getView().writeValue(mStepName, parentKey, JsonFormConstants.OPTIONS_FIELD_NAME, childKey,
-                    String.valueOf(((CheckBox) compoundButton).isChecked()));
-        } else if (compoundButton instanceof RadioButton) {
+                    String.valueOf(((MaterialCheckBox) compoundButton).isChecked()));
+        } else if (compoundButton instanceof MaterialRadioButton) {
             if (isChecked) {
                 String parentKey = (String) compoundButton.getTag(R.id.key);
                 String childKey = (String) compoundButton.getTag(R.id.childKey);
