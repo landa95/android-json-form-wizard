@@ -17,6 +17,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.CheckBox;
@@ -68,7 +69,7 @@ public class CheckBoxFactory implements FormWidgetFactory {
         for (int i = 0; i < options.length(); i++) {
             JSONObject item = options.getJSONObject(i);
             if (isVisible(stepName, item, context, resolver)) {
-                CheckBox checkBox = (CheckBox) LayoutInflater.from(context).inflate(R.layout.item_checkbox, null);
+                MaterialCheckBox checkBox = (MaterialCheckBox) LayoutInflater.from(context).inflate(R.layout.item_checkbox, null);
                 checkBox.setText(bundle.resolveKey(item.getString("text")));
                 checkBox.setTag(R.id.key, jsonObject.getString("key"));
                 checkBox.setTag(R.id.type, jsonObject.getString("type"));

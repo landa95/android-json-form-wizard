@@ -286,11 +286,11 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 } else {
                     getView().writeValue(mStepName, key, null);
                 }
-            } else if (childAt instanceof CheckBox) {
+            } else if (childAt instanceof MaterialCheckBox) {
                 String parentKey = (String) childAt.getTag(R.id.key);
                 String childKey = (String) childAt.getTag(R.id.childKey);
                 getView().writeValue(mStepName, parentKey, JsonFormConstants.OPTIONS_FIELD_NAME, childKey,
-                        String.valueOf(((CheckBox) childAt).isChecked()));
+                        String.valueOf(((MaterialCheckBox) childAt).isChecked()));
             } else if (childAt instanceof MaterialRadioButton) {
                 String parentKey = (String) childAt.getTag(R.id.key);
                 String childKey = (String) childAt.getTag(R.id.childKey);
@@ -605,7 +605,7 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
     }
 
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if (compoundButton instanceof CheckBox) {
+        if (compoundButton instanceof MaterialCheckBox) {
             String parentKey = (String) compoundButton.getTag(R.id.key);
             String childKey = (String) compoundButton.getTag(R.id.childKey);
             getView().writeValue(mStepName, parentKey, JsonFormConstants.OPTIONS_FIELD_NAME, childKey,
