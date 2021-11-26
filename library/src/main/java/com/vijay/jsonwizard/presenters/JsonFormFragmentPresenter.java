@@ -500,29 +500,34 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
 
         String key = (String) v.getTag(R.id.key);
         String type = (String) v.getTag(R.id.type);
-        if (checkFormPermissions()) {
             if (JsonFormConstants.CHOOSE_IMAGE.equals(type)) {
-                mCurrentKey = key;
-                if (v.getTag(R.id.btn_clear) != null) {
-                    getView().updateRelevantImageView(null, null, key, mStepName);
-                    v.setVisibility(View.GONE);
+                if (checkFormPermissions()) {
+                    mCurrentKey = key;
+                    if (v.getTag(R.id.btn_clear) != null) {
+                        getView().updateRelevantImageView(null, null, key, mStepName);
+                        v.setVisibility(View.GONE);
+                    } else {
+                        getView().hideKeyBoard();
+                        Intent pickerIntent = ImagePicker.getPickImageIntent(v.getContext());
+                        getView().startActivityForResult(pickerIntent, RESULT_LOAD_IMG);
+                    }
                 } else {
-                    getView().hideKeyBoard();
-                    Intent pickerIntent = ImagePicker.getPickImageIntent(v.getContext());
-                    getView().startActivityForResult(pickerIntent, RESULT_LOAD_IMG);
+                    Log.w(TAG, "CAMERA and STORAGE permissions required to use IMAGE widget");
                 }
             }
 
             if (JsonFormConstants.BARCODE_TEXT.equals(type)) {
-                Log.d(TAG, "onClick: barcode");
-                getView().hideKeyBoard();
-                Intent barcodeIntent = new Intent(v.getContext(), LivePreviewActivity.class);
-                mCurrentKey = key;
-                getView().startActivityForResult(barcodeIntent, RESULT_LOAD_BARCODE);
+                if (checkFormPermissions()) {
+                    Log.d(TAG, "onClick: barcode");
+                    getView().hideKeyBoard();
+                    Intent barcodeIntent = new Intent(v.getContext(), LivePreviewActivity.class);
+                    mCurrentKey = key;
+                    getView().startActivityForResult(barcodeIntent, RESULT_LOAD_BARCODE);
+
+                } else {
+                    Log.w(TAG, "CAMERA and STORAGE permissions required to use BARCODE widgets");
+                }
             }
-        } else {
-            Log.w(TAG, "CAMERA and STORAGE permissions required to use IMAGE or BARCODE widgets");
-        }
 
         if (JsonFormConstants.LOCATION_PICKER.equals(type)) {
             Log.d(TAG, "onClick: location");
