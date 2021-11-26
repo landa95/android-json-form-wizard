@@ -55,12 +55,12 @@ public class TimePickerFactory implements FormWidgetFactory {
                 views = getReadOnlyViewsFromJson(context, jsonObject, bundle);
                 break;
             default:
-                views = getEditableViewsFromJson(stepName, context, jsonObject, bundle, resolver);
+                views = getEditableViewsFromJson(stepName, context, jsonObject, bundle, resolver, listener);
         }
         return views;
     }
 
-    private List<View> getEditableViewsFromJson(String stepName, Context context, JSONObject jsonObject, JsonFormBundle bundle, JsonExpressionResolver resolver)
+    private List<View> getEditableViewsFromJson(String stepName, Context context, JSONObject jsonObject, JsonFormBundle bundle, JsonExpressionResolver resolver, CommonListener listener)
         throws JSONException {
         List<View> views = new ArrayList<>(1);
         final MaterialTextInputLayout materialTextInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(
@@ -71,10 +71,10 @@ public class TimePickerFactory implements FormWidgetFactory {
         materialTextInputLayout.setHint(hint);
         editText.setId(View.generateViewId());
         materialTextInputLayout.setTag(R.id.key, jsonObject.getString("key"));
-        materialTextInputLayout.setTag(R.id.type, jsonObject.getString("type"));
+        materialTextInputLayout.setTag(R.id.type, JsonFormConstants.TIME_PICKER);
         materialTextInputLayout.setTag(R.id.v_pattern, bundle.resolveKey(jsonObject.getString("pattern")));
         editText.setTag(R.id.key, jsonObject.getString("key"));
-        editText.setTag(R.id.type, jsonObject.getString("type"));
+        editText.setTag(R.id.type, JsonFormConstants.TIME_PICKER);
         String widgetPattern = bundle.resolveKey(jsonObject.getString("pattern"));
         editText.setTag(R.id.v_pattern, bundle.resolveKey(jsonObject.getString("pattern")));
         materialTextInputLayout.setTag(R.id.v_pattern, bundle.resolveKey(jsonObject.getString("pattern")));
@@ -111,6 +111,9 @@ public class TimePickerFactory implements FormWidgetFactory {
 
         editText.setInputType(InputType.TYPE_NULL);
         //DatepickerListener is attached in JsonFormFragment, check onViewCreated method
+        editText.setOnClickListener(listener);
+        editText.setOnFocusChangeListener(listener);
+
         views.add(materialTextInputLayout);
         materialTextInputLayout.initTextWatchers();
         return views;

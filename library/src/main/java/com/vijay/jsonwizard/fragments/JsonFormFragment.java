@@ -107,36 +107,6 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.addFormElements();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            addDialogPickerListeners(fragmentManager);
-
-    }
-
-    private void addDialogPickerListeners(FragmentManager fragmentManager) {
-        MaterialTextInputLayout materialTextInputLayout ;
-        for(int i = 0; i < mMainView.getChildCount(); i++){
-            View v = mMainView.getChildAt(i);
-            if(v instanceof MaterialTextInputLayout && v.getTag(R.id.type).equals(JsonFormConstants.DATE_PICKER)){
-                materialTextInputLayout = (MaterialTextInputLayout) v;
-                if(!materialTextInputLayout.getEditText().hasOnClickListeners()){
-                    materialTextInputLayout.hasOnClickListeners();
-                    DatePickerListener datePickerListener = new DatePickerListener(materialTextInputLayout, fragmentManager);
-                    materialTextInputLayout.getEditText().setOnClickListener(datePickerListener);
-                    materialTextInputLayout.getEditText().setOnFocusChangeListener(datePickerListener);
-
-                }
-            } else if(v instanceof MaterialTextInputLayout && v.getTag(R.id.type).equals(JsonFormConstants.TIME_PICKER)){
-                materialTextInputLayout = (MaterialTextInputLayout) v;
-                if(!materialTextInputLayout.getEditText().hasOnClickListeners()){
-                    materialTextInputLayout.hasOnClickListeners();
-                    String pattern =  v.getTag(R.id.v_pattern).toString();
-                    TimePickerListener datePickerListener = new TimePickerListener(materialTextInputLayout, pattern, fragmentManager);
-                    materialTextInputLayout.getEditText().setOnClickListener(datePickerListener);
-                    materialTextInputLayout.getEditText().setOnFocusChangeListener(datePickerListener);
-
-                }
-            }
-        }
     }
 
     @Override
@@ -537,5 +507,10 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
             presenter.writeValuesAndValidate(mMainView);
             PropertiesUtils.getInstance(getContext()).setPausedStep(presenter.getStepName());
         }
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        presenter.onFocusChange(view,b);
     }
 }

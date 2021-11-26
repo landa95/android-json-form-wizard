@@ -37,6 +37,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.barcode.LivePreviewActivity;
@@ -49,6 +50,8 @@ import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.fragments.JsonFormFragment;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interactors.JsonFormInteractor;
+import com.vijay.jsonwizard.listeners.DatePickerListener;
+import com.vijay.jsonwizard.listeners.TimePickerListener;
 import com.vijay.jsonwizard.maps.MapsActivity;
 import com.vijay.jsonwizard.maps.MapsUtils;
 import com.vijay.jsonwizard.mvp.MvpBasePresenter;
@@ -553,6 +556,21 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
             getView().startActivityForResult(intent, RESULT_LOAD_LOCATION);
         }
 
+        if (JsonFormConstants.DATE_PICKER.equals(type)){
+            getView().hideKeyBoard();
+            JsonFormFragment formFragment = (JsonFormFragment) getView();
+            DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, formFragment.getActivity().getSupportFragmentManager());
+            datePickerListener.openDatePicker(v);
+
+        }
+
+        if (JsonFormConstants.TIME_PICKER.equals(type)){
+            getView().hideKeyBoard();
+            JsonFormFragment formFragment = (JsonFormFragment) getView();
+            TimePickerListener timePickerListener = new TimePickerListener((TextInputEditText) v, (String) v.getTag(R.id.v_pattern) ,formFragment.getActivity().getSupportFragmentManager());
+            timePickerListener.openTimePicker(v);
+        }
+
         if (JsonFormConstants.RESOURCE_VIEWER.equals(type)) {
             mCurrentKey = key;
             getView().hideKeyBoard();
@@ -581,6 +599,28 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 getView().startActivityForResult(intent, RESULT_RESOURCE_VIEW);
             } else {
                 Log.w(TAG, "Unsupported resource: " + resource);
+            }
+        }
+    }
+
+    public void onFocusChange(View v, boolean focus){
+        String key = (String) v.getTag(R.id.key);
+        String type = (String) v.getTag(R.id.type);
+        if(JsonFormConstants.DATE_PICKER.equals(type)){
+            if (focus){
+                JsonFormFragment formFragment = (JsonFormFragment) getView();
+                DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, formFragment.getActivity().getSupportFragmentManager());
+                getView().hideKeyBoard();
+                datePickerListener.openDatePicker(v);
+            }
+        }
+
+        if (JsonFormConstants.TIME_PICKER.equals(type)){
+            if (focus) {
+                getView().hideKeyBoard();
+                JsonFormFragment formFragment = (JsonFormFragment) getView();
+                TimePickerListener timePickerListener = new TimePickerListener((TextInputEditText) v, (String) v.getTag(R.id.v_pattern), formFragment.getActivity().getSupportFragmentManager());
+                timePickerListener.openTimePicker(v);
             }
         }
     }

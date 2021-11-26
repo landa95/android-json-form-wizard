@@ -7,46 +7,38 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class TimePickerListener implements View.OnFocusChangeListener, View.OnClickListener {
+public class TimePickerListener {
 
     private MaterialTimePicker d;
-    private MaterialTextInputLayout timeText;
+    private TextInputEditText timeText;
     private static final String TAG = "TimePickerListener";
     private String formatString;
     private static FragmentManager fragmentManager;
 
-    public TimePickerListener(MaterialTextInputLayout materialTextInputLayout, String formatString, FragmentManager fragmentManager) {
-        this.timeText = materialTextInputLayout;
+    public TimePickerListener(TextInputEditText textInputEditText, String formatString, FragmentManager fragmentManager) {
+        this.timeText = textInputEditText;
         this.formatString = formatString;
         this.fragmentManager = fragmentManager;
     }
 
-    @Override
-    public void onFocusChange(View view, boolean focus) {
-        if (focus) {
-            openTimePicker(view);
-        }
-    }
 
-    @Override
-    public void onClick(View view) {
-        openTimePicker(view);
-    }
-
-    private void openTimePicker(View view) {
+    public void openTimePicker(View view) {
         int hour = 0;
         int minute = 0;
-        String timeStr = timeText.getEditText().getText().toString();
+        String timeStr = timeText.getText().toString();
         String pattern = (String) timeText.getTag(R.id.v_pattern);
         if (timeStr != null && !"".equals(timeStr)) {
             try {
@@ -72,7 +64,7 @@ public class TimePickerListener implements View.OnFocusChangeListener, View.OnCl
         d.addOnPositiveButtonClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               timeText.getEditText().setText(String.format("%02d:%02d", d.getHour(), d.getMinute()));
+               timeText.setText(String.format("%02d:%02d", d.getHour(), d.getMinute()));
                d.dismiss();
            }
         });

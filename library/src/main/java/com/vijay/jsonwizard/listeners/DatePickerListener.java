@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
 
@@ -20,33 +21,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class DatePickerListener implements View.OnFocusChangeListener, View.OnClickListener{
+public class DatePickerListener {
 
     private MaterialDatePicker d;
-    private MaterialTextInputLayout dateText;
+    private TextInputEditText dateText;
     private static final String TAG = "DatePickerListener";
     private static FragmentManager fragmentManager;
 
-    public DatePickerListener(MaterialTextInputLayout materialEditText, FragmentManager fragmentManager) {
+    public DatePickerListener(TextInputEditText materialEditText, FragmentManager fragmentManager) {
         this.dateText = materialEditText;
         this.fragmentManager = fragmentManager;
     }
 
-    @Override
-    public void onFocusChange(View view, boolean focus) {
-        if (focus) {
-            openDatePicker(view);
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        openDatePicker(view);
-    }
-
-    private void openDatePicker(View view) {
+    public void openDatePicker(View view) {
         Date date = new Date();
-        String dateStr = dateText.getEditText().getText().toString();
+        String dateStr = dateText.getText().toString();
         if (dateStr != null && !"".equals(dateStr)) {
             try {
                 date = SimpleDateFormat.getDateInstance().parse(dateStr);
@@ -87,7 +76,7 @@ public class DatePickerListener implements View.OnFocusChangeListener, View.OnCl
                 utc.setTimeInMillis((long) selection);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String formatted = format.format(utc.getTime());
-                dateText.getEditText().setText(formatted);
+                dateText.setText(formatted);
                 d.dismiss();
             }
         });
