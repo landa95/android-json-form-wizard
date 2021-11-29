@@ -21,8 +21,10 @@ import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.fragments.JsonFormFragment;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
+import com.vijay.jsonwizard.interfaces.ClickableFormWidget;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
+import com.vijay.jsonwizard.listeners.DatePickerListener;
 import com.vijay.jsonwizard.utils.DateUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
 
@@ -43,7 +45,7 @@ import java.util.TimeZone;
  * Created by jurkiri on 16/11/17.
  */
 
-public class DatePickerFactory implements FormWidgetFactory {
+public class DatePickerFactory implements FormWidgetFactory, ClickableFormWidget {
 
     private static final String TAG = "DatePickerFactory";
 
@@ -142,77 +144,20 @@ public class DatePickerFactory implements FormWidgetFactory {
         return views;
     }
 
-   /* public void openDatePicker(View view, FragmentManager fragmentManager) {
-        Date date = new Date();
-        final TextInputEditText dateText = (TextInputEditText) view;
-        String dateStr = dateText.getText().toString();
-        if (dateStr != null && !"".equals(dateStr)) {
-            try {
-                date = SimpleDateFormat.getDateInstance().parse(dateStr);
-            } catch (ParseException e) {
-                Log.e(TAG, "Error parsing " + dateStr + ": " + e.getMessage());
-            }
-        }
-
-        //check if there are calendar constraints in the view, minDate and maxDate
-        final String minDateStr = (String) view.getTag(R.id.minDate);
-        final String maxDateStr = (String) view.getTag(R.id.maxDate);
-
-        //seup calendar
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-
-        //setting up calendar constraints
-        CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
-        constraintBuilder.setOpenAt(calendar.getTimeInMillis());
-        String pattern = (String) dateText.getTag(R.id.v_pattern);
-        Date minDate = resolveDate(minDateStr, pattern);
-        Date maxDate = resolveDate(maxDateStr, pattern);
-
-        if (minDate != null && maxDate != null) {
-            constraintBuilder.setStart(minDate.getTime());
-            constraintBuilder.setEnd(maxDate.getTime());
-        }
-
-        //build calendar picker
-        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-        builder.setCalendarConstraints(constraintBuilder.build());
-        builder.setTheme(R.style.widget_material_calendar);
-        final MaterialDatePicker d = builder.build();
-
-        d.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
-                Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                utc.setTimeInMillis((long) selection);
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                String formatted = format.format(utc.getTime());
-                dateText.setText(formatted);
-                d.dismiss();
-            }
-        });
-
-        d.addOnNegativeButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.dismiss();
-            }
-        });
-        FragmentActivity dialog = d.getActivity();
-        d.show(fragmentManager, "DATE_PICKER");
+    @Override
+    public void onClick(JsonFormFragment jsonFormFragment, View v) {
+        jsonFormFragment.hideKeyBoard();
+        DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, jsonFormFragment.getActivity().getSupportFragmentManager());
+        datePickerListener.openDatePicker(v);
     }
 
-    private Date resolveDate(String dateStr, String pattern) {
-        DateFormat sdf;
-        if (TextUtils.isEmpty(pattern)) {
-            sdf = SimpleDateFormat.getDateInstance();
-        } else {
-            sdf = new SimpleDateFormat(pattern);
+    @Override
+    public void onFocusChange(JsonFormFragment jsonFormFragment,boolean focus, View v) {
+        if(focus) {
+            jsonFormFragment.hideKeyBoard();
+            DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, jsonFormFragment.getActivity().getSupportFragmentManager());
+            datePickerListener.openDatePicker(v);
         }
-        try {
-            return sdf.parse(dateStr);
-        } catch (ParseException e) {
-            Log.e(TAG, "Error parsing " + dateStr + ": " + e.getMessage());
-        }
-        return null;
-    }*/
+    }
+    
 }

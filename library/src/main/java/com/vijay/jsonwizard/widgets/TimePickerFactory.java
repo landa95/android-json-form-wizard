@@ -8,14 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
+import com.vijay.jsonwizard.fragments.JsonFormFragment;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
+import com.vijay.jsonwizard.interfaces.ClickableFormWidget;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
+import com.vijay.jsonwizard.listeners.TimePickerListener;
 import com.vijay.jsonwizard.utils.DateUtils;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
@@ -33,7 +37,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class TimePickerFactory implements FormWidgetFactory {
+public class TimePickerFactory implements FormWidgetFactory, ClickableFormWidget {
 
     private static final String TAG = "TimePickerFactory";
 
@@ -157,6 +161,22 @@ public class TimePickerFactory implements FormWidgetFactory {
     @Nullable
     private JSONObject getCurrentValues(Context context, String stepName) throws JSONException {
         return ExpressionResolverContextUtils.getCurrentValues(context, stepName);
+    }
+
+    @Override
+    public void  onClick(JsonFormFragment jsonFormFragment, View v) {
+        jsonFormFragment.hideKeyBoard();
+        TimePickerListener timePickerListener = new TimePickerListener((TextInputEditText) v, (String) v.getTag(R.id.v_pattern), jsonFormFragment.getActivity().getSupportFragmentManager());
+        timePickerListener.openTimePicker(v);
+    }
+
+    @Override
+    public void onFocusChange(JsonFormFragment jsonFormFragment, boolean focus, View v) {
+        if (focus) {
+            jsonFormFragment.hideKeyBoard();
+            TimePickerListener timePickerListener = new TimePickerListener((TextInputEditText) v, (String) v.getTag(R.id.v_pattern), jsonFormFragment.getActivity().getSupportFragmentManager());
+            timePickerListener.openTimePicker(v);
+        }
     }
 }
 
