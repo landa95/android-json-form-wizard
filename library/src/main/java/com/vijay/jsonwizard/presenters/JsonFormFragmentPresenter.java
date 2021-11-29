@@ -52,8 +52,6 @@ import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interactors.JsonFormInteractor;
 import com.vijay.jsonwizard.interfaces.ClickableFormWidget;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
-import com.vijay.jsonwizard.listeners.DatePickerListener;
-import com.vijay.jsonwizard.listeners.TimePickerListener;
 import com.vijay.jsonwizard.maps.MapsActivity;
 import com.vijay.jsonwizard.maps.MapsUtils;
 import com.vijay.jsonwizard.mvp.MvpBasePresenter;
@@ -563,15 +561,7 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 mCurrentKey = key;
                 getView().startActivityForResult(intent, RESULT_LOAD_LOCATION);
             }
-
-            if (JsonFormConstants.DATE_PICKER.equals(type)) {
-                getView().hideKeyBoard();
-                JsonFormFragment formFragment = (JsonFormFragment) getView();
-                DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, formFragment.getActivity().getSupportFragmentManager());
-                datePickerListener.openDatePicker(v);
-
-            }
-
+            
             if (JsonFormConstants.RESOURCE_VIEWER.equals(type)) {
                 mCurrentKey = key;
                 getView().hideKeyBoard();

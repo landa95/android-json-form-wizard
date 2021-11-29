@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
@@ -19,7 +21,6 @@ import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.ClickableFormWidget;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
-import com.vijay.jsonwizard.listeners.TimePickerListener;
 import com.vijay.jsonwizard.utils.DateUtils;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
@@ -36,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 public class TimePickerFactory implements FormWidgetFactory, ClickableFormWidget {
 
@@ -114,7 +116,6 @@ public class TimePickerFactory implements FormWidgetFactory, ClickableFormWidget
         }
 
         editText.setInputType(InputType.TYPE_NULL);
-        //DatepickerListener is attached in JsonFormFragment, check onViewCreated method
         editText.setOnClickListener(listener);
         editText.setOnFocusChangeListener(listener);
 
@@ -176,6 +177,58 @@ public class TimePickerFactory implements FormWidgetFactory, ClickableFormWidget
             jsonFormFragment.hideKeyBoard();
             TimePickerListener timePickerListener = new TimePickerListener((TextInputEditText) v, (String) v.getTag(R.id.v_pattern), jsonFormFragment.getActivity().getSupportFragmentManager());
             timePickerListener.openTimePicker(v);
+        }
+    }
+
+    private class TimePickerListener {
+
+        private MaterialTimePicker d;
+        private TextInputEditText timeText;
+        private static final String TAG = "TimePickerListener";
+        private String formatString;
+        private FragmentManager fragmentManager;
+
+        private TimePickerListener(TextInputEditText textInputEditText, String formatString, FragmentManager fragmentManager) {
+            this.timeText = textInputEditText;
+            this.formatString = formatString;
+            this.fragmentManager = fragmentManager;
+        }
+        
+        private void openTimePicker(View view) {
+            int hour = 0;
+            int minute = 0;
+            String timeStr = timeText.getText().toString();
+            String pattern = (String) timeText.getTag(R.id.v_pattern);
+            if (timeStr != null && !"".equals(timeStr)) {
+                try {
+                    SimpleDateFormat dateFormatter = new SimpleDateFormat(pattern);
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dateFormatter.parse(timeStr));
+                    hour = c.get(Calendar.HOUR_OF_DAY);
+                    minute = c.get(Calendar.MINUTE);
+
+                } catch (ParseException e) {
+                    Log.e(TAG, "Error parsing " + timeStr + ": " + e.getMessage());
+                }
+            } else {
+                final Calendar c = Calendar.getInstance();
+                hour = c.get(Calendar.HOUR_OF_DAY);
+                minute = c.get(Calendar.MINUTE);
+            }
+
+            MaterialTimePicker.Builder builder = new MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).setHour(hour).setMinute(minute);
+            builder.setTheme(R.style.widget_material_timepicker);
+            d = builder.build();
+
+            d.addOnPositiveButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    timeText.setText(String.format("%02d:%02d", d.getHour(), d.getMinute()));
+                    d.dismiss();
+                }
+            });
+
+            d.show(this.fragmentManager, TAG);
         }
     }
 }
