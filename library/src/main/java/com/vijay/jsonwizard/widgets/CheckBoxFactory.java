@@ -20,15 +20,12 @@ import androidx.annotation.Nullable;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.customviews.CheckBox;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
 import com.vijay.jsonwizard.i18n.JsonFormBundle;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
-import com.vijay.jsonwizard.interfaces.JsonApi;
 import com.vijay.jsonwizard.utils.ExpressionResolverContextUtils;
-import com.vijay.jsonwizard.utils.JsonFormUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;

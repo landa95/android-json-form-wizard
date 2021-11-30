@@ -30,7 +30,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -418,11 +417,6 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Not implementation needed
-    }
-
-    @Override
-    public void onCheckedChanged(Switch view, boolean checked) {
-        presenter.onSwitchOnOrOff(view, checked);
     }
 
     public LinearLayout getMainView() {

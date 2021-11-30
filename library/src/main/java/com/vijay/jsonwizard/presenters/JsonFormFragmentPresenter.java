@@ -39,11 +39,9 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.radiobutton.MaterialRadioButton;
-import com.rey.material.widget.Switch;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.barcode.LivePreviewActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.customviews.CheckBox;
 import com.vijay.jsonwizard.customviews.MaterialTextInputLayout;
 import com.vijay.jsonwizard.demo.resources.ResourceResolver;
 import com.vijay.jsonwizard.expressions.JsonExpressionResolver;
@@ -73,7 +71,6 @@ import com.vijay.jsonwizard.widgets.ImagePickerFactory;
 import com.vijay.jsonwizard.widgets.LocationPickerFactory;
 import com.vijay.jsonwizard.widgets.MaterialEditTextFactory;
 import com.vijay.jsonwizard.widgets.SpinnerFactory;
-import com.vijay.jsonwizard.widgets.TimePickerFactory;
 import com.vijay.jsonwizard.widgets.WidgetFactoryRegistry;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
@@ -650,11 +647,6 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 }
             }
         }
-    }
-
-    public void onSwitchOnOrOff(Switch v, boolean checked) {
-        String key = (String) v.getTag(R.id.key);
-        getView().writeValue(mStepName, key, String.valueOf(checked));
     }
 
     public String getCurrentKey() {
