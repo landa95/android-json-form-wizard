@@ -97,8 +97,6 @@ public class DatePickerFactory implements FormWidgetFactory, ClickableFormWidget
         editText.setTag(R.id.minDate, minDate);
         editText.setTag(R.id.maxDate, maxDate);
 
-        //materialTextInputLayout.setOnFocusChangeListener(listener);
-        //materialTextInputLayout.setOnClickListener(listener);
         editText.setOnFocusChangeListener(listener);
         editText.setOnClickListener(listener);
         final String value = jsonObject.optString("value");
@@ -144,7 +142,7 @@ public class DatePickerFactory implements FormWidgetFactory, ClickableFormWidget
 
     @Override
     public void onClick(JsonFormFragment jsonFormFragment, View v) {
-        //jsonFormFragment.hideKeyBoard();
+        jsonFormFragment.hideKeyBoard();
         DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, jsonFormFragment.getActivity().getSupportFragmentManager());
         datePickerListener.openDatePicker(v);
     }
