@@ -115,7 +115,7 @@ public class DatePickerFactory implements FormWidgetFactory, ClickableFormWidget
             throws JSONException {
         List<View> views = new ArrayList<>(1);
         final MaterialTextInputLayout textInputLayout = (MaterialTextInputLayout) LayoutInflater.from(context).inflate(
-                R.layout.item_date_picker, null);
+                R.layout.item_material_edit_text, null);
         final String hint = bundle.resolveKey(jsonObject.getString("hint"));
         TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
 
@@ -144,7 +144,7 @@ public class DatePickerFactory implements FormWidgetFactory, ClickableFormWidget
 
     @Override
     public void onClick(JsonFormFragment jsonFormFragment, View v) {
-        jsonFormFragment.hideKeyBoard();
+        //jsonFormFragment.hideKeyBoard();
         DatePickerListener datePickerListener = new DatePickerListener((TextInputEditText) v, jsonFormFragment.getActivity().getSupportFragmentManager());
         datePickerListener.openDatePicker(v);
     }
@@ -203,7 +203,7 @@ public class DatePickerFactory implements FormWidgetFactory, ClickableFormWidget
             //build calendar picker
             MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
             builder.setCalendarConstraints(constraintBuilder.build());
-            builder.setTheme(R.style.widget_material_calendar);
+
             d = builder.build();
 
             d.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
